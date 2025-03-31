@@ -1,14 +1,24 @@
 package main
 
 import (
-	"chat/internal/auth/repository/gorm"
+	myredis "chat/internal/auth/repository/go-redis"
+	mygorm "chat/internal/auth/repository/gorm"
 	"fmt"
 )
 
-func main() {
-	err := gorm.InitDB()
+func Init() {
+	err := mygorm.InitMysqlDB()
 	if err != nil {
-		fmt.Println("InitDB Failed!")
+		fmt.Println("InitMysqlDB Failed!")
 		return
 	}
+	err = myredis.InitRedisDB()
+	if err != nil {
+		fmt.Println("InitRedisDB Failed!")
+		return
+	}
+}
+
+func main() {
+	Init()
 }

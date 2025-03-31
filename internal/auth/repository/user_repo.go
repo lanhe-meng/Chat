@@ -2,7 +2,7 @@ package repository
 
 import (
 	"chat/internal/auth/model"
-	"chat/internal/auth/repository/gorm"
+	mygorm "chat/internal/auth/repository/gorm"
 	"context"
 	"time"
 )
@@ -19,12 +19,12 @@ type UserRepository struct {
 }
 
 func (*UserRepository) CreateUser(ctx *context.Context, user *model.User) error {
-	return gorm.DB.Create(user).Error
+	return mygorm.MysqlDB.Create(user).Error
 }
 
 func (*UserRepository) FindByUsername(ctx *context.Context, username string) (*model.User, error) {
 	var user model.User
-	err := gorm.DB.Where("username = ?", username).Find(&user).Error
+	err := mygorm.MysqlDB.Where("username = ?", username).Find(&user).Error
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ func (*UserRepository) FindByUsername(ctx *context.Context, username string) (*m
 
 func (*UserRepository) UpdateLastLogin(ctx *context.Context, username string) error {
 	var user model.User
-	err := gorm.DB.Where("username = ?", username).Find(&user).Error
+	err := mygorm.MysqlDB.Where("username = ?", username).Find(&user).Error
 	if err != nil {
 		return err
 	}

@@ -28,7 +28,7 @@ message LoginRequest{
 }
 
 message LoginResponse{
-    int64 err=1;
+    string err=1;
 }
 
 message RegisterRequest{

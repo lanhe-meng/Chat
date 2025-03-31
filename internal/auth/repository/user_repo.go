@@ -18,11 +18,11 @@ type UserRepository struct {
 	// Delete(ctx context.Context, id uint) error
 }
 
-func (*UserRepository) CreateUser(ctx *context.Context, user *model.User) error {
+func (*UserRepository) CreateUser(ctx context.Context, user *model.User) error {
 	return mygorm.MysqlDB.Create(user).Error
 }
 
-func (*UserRepository) FindByUsername(ctx *context.Context, username string) (*model.User, error) {
+func (*UserRepository) FindByUsername(ctx context.Context, username string) (*model.User, error) {
 	var user model.User
 	err := mygorm.MysqlDB.Where("username = ?", username).Find(&user).Error
 	if err != nil {
@@ -31,7 +31,7 @@ func (*UserRepository) FindByUsername(ctx *context.Context, username string) (*m
 	return &user, nil
 }
 
-func (*UserRepository) UpdateLastLogin(ctx *context.Context, username string) error {
+func (*UserRepository) UpdateLastLogin(ctx context.Context, username string) error {
 	var user model.User
 	err := mygorm.MysqlDB.Where("username = ?", username).Find(&user).Error
 	if err != nil {

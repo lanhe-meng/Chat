@@ -8,11 +8,8 @@ import (
 	"time"
 )
 
-type VerifyCodeRepository struct {
-}
-
 // 设置键和设置时间非原子，可能会出现问题，后续需要修改
-func (*VerifyCodeRepository) Save(ctx context.Context, key string, ttl, value int) (bool, error) {
+func Savekv(ctx context.Context, key string, ttl, value int) (bool, error) {
 	cmd := myredis.Rdb.HSet(ctx, key, model.EmailRedisValue{
 		Code:    value,
 		Attemps: 0,
@@ -28,7 +25,7 @@ func (*VerifyCodeRepository) Save(ctx context.Context, key string, ttl, value in
 	return true, nil
 }
 
-func (*VerifyCodeRepository) GetTTL(ctx context.Context, key string) (time.Duration, error) {
+func GetTTL(ctx context.Context, key string) (time.Duration, error) {
 	ttl, err := myredis.Rdb.TTL(ctx, key).Result()
 	if err != nil {
 		return 0, err

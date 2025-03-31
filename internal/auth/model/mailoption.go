@@ -2,7 +2,7 @@ package model
 
 type EmailOptions struct {
 	MailHost string //smtp.163.com
-	MailPort int    //465
+	MailPort int    //25
 	MailUser string // 发件人
 	MailPass string // 发件人密码
 	MailTo   string // 收件人 多个用,分割
